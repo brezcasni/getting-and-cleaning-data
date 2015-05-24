@@ -1,5 +1,5 @@
 #                         STEP 1
-#       Merge TRAIN & TEST :: DATA -> LABEL -> SUBJECT
+# Merges the training and the test sets to create one data set
 # -----------------------------------------------------------
 
 # TRAIN DATA
@@ -19,7 +19,7 @@ join_subject <- rbind(train_subject, test_subject)
 
 
 #                         STEP 2
-#           Extract mean and std for measurements
+# Extracts only the measurements on the mean and standard deviation for each measurement
 # -----------------------------------------------------------
 
 features <- read.table("./data/features.txt")
@@ -27,23 +27,30 @@ mean_std <- grep("mean\\(\\)|std\\(\\)", features[, 2])
 join_data <- join_data[, mean_std]
 
 #                         STEP 3
-
+# Uses descriptive activity names to name the activities in the data set
 # -----------------------------------------------------------
 
-#                       ?
+activity <- read.table("./data/activity_labels.txt")
+activity[, 2] <- tolower(gsub("_", "", activity[, 2]))
+substr(activity[2, 2], 8, 8) <- toupper(substr(activity[2, 2], 8, 8))
+substr(activity[3, 2], 8, 8) <- toupper(substr(activity[3, 2], 8, 8))
+activity_label <- activity[join_label[, 1], 2]
+join_label[, 1] <- activity_label
+names(join_label) <- "activity"
 
 #                         STEP 4
-
+# Appropriately labels the data set with descriptive variable names
 # -----------------------------------------------------------
 
-#                       ?
+
 
 
 #                         STEP 5
-
+# From the data set in step 4, creates a second, independent
+# tidy data set with the average of each variable for each activity and each subject
 # -----------------------------------------------------------
 
-#                       ?
+
 
 
 
