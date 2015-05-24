@@ -11,3 +11,4 @@ There are two output files:
 
 In RStudio do:
 	data <- read.table("data_with_means.txt")
+	data[1:20,1:4]
