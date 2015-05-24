@@ -52,9 +52,22 @@ write.table(cleaned_data, "merged_data.txt")
 # tidy data set with the average of each variable for each activity and each subject
 # -----------------------------------------------------------
 
-
-
-
-
-
-
+subject_len <- length(table(join_subject)) # 30
+activity_len <- dim(activity)[1] # 6
+column_len <- dim(cleaned_data)[2]
+result <- matrix(NA, nrow=subject_len*activity_len, ncol=column_len) 
+result <- as.data.frame(result)
+colnames(result) <- colnames(cleaned_data)
+row <- 1
+for(i in 1:subject_len) {
+        for(j in 1:activity_len) {
+                result[row, 1] <- sort(unique(join_subject)[, 1])[i]
+                result[row, 2] <- activity[j, 2]
+                bool1 <- i == cleaned_data$subject
+                bool2 <- activity[j, 2] == cleaned_data$activity
+                result[row, 3:column_len] <- colMeans(cleaned_data[bool1&bool2, 3:column_len])
+                row <- row + 1
+        }
+}
+head(result)
+write.table(result, "data_with_means.txt")
