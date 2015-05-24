@@ -26,6 +26,12 @@ features <- read.table("./data/features.txt")
 mean_std <- grep("mean\\(\\)|std\\(\\)", features[, 2])
 join_data <- join_data[, mean_std]
 
+names(join_data) <- gsub("\\(\\)", "", features[mean_std, 2])
+names(join_data) <- gsub("mean", "Mean", names(join_data))
+names(join_data) <- gsub("std", "Std", names(join_data))
+names(join_data) <- gsub("-", "", names(join_data))
+
+
 #                         STEP 3
 # Uses descriptive activity names to name the activities in the data set
 # -----------------------------------------------------------
