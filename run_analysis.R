@@ -42,7 +42,9 @@ names(join_label) <- "activity"
 # Appropriately labels the data set with descriptive variable names
 # -----------------------------------------------------------
 
-
+names(join_subject) <- "subject"
+cleaned_data <- cbind(join_subject, join_label, join_data)
+write.table(cleaned_data, "merged_data.txt")
 
 
 #                         STEP 5
